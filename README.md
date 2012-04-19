@@ -1,4 +1,4 @@
-#CakePan 
+# CakePan - CakePHP Mustache Support (CakePHP v2.x)
 
 CakePan is a CakePHP view helper that renders Mustache templates. It will also load and process sub-templates!
 
@@ -17,13 +17,11 @@ CakePan should be added to your project the same as any other CakePHP View Helpe
 
 If you want to add Mustache support globally, add it to your `AppController`
 
-```php
-class AppController extends Controller {
-	...
-	public $helpers = array('Mustache');
-	...
-}
-```
+	class AppController extends Controller {
+		...
+		public $helpers = array('Mustache');
+		...
+	}
 
 ## Usage
 
@@ -47,14 +45,13 @@ Your Mustache templates should all be in the `/app/View/Elements/` directory, wi
 
 All the variable set by the controller are available, and merged with values passed into `$params`.
 
-```php
-$params = array(
-	'title' => 'Show me the bacon!',
-	'text' => 'Bacon ipsum dolor sit amet fatback pig swine...'
-);
+	$params = array(
+		'title' => 'Show me the bacon!',
+		'text' => 'Bacon ipsum dolor sit amet fatback pig swine...'
+	);
 
-$this->Mustache->element('template_name', $params)
-```
+	$this->Mustache->element('template_name', $params)
+
 
 
 ### Sub-templates
@@ -63,17 +60,15 @@ Sub-templates should follow the same naming convention. Mustache will pass the v
 
 /views/elements/posts/post.mustache:
 
-```mustache
-{{#Post}}
-<h2>{{title}}</h2\>
-<div>
-	{{text}}
-</div>
-{{/Post}}
-{{#Comment}}
-	{{>post/comment}}
-{{/Comment}}
-```
+	{{#Post}}
+	<h2>{{title}}</h2\>
+	<div>
+		{{text}}
+	</div>
+	{{/Post}}
+	{{#Comment}}
+		{{>post/comment}}
+	{{/Comment}}
 
 /views/elements/posts/comment.mustache:
 
