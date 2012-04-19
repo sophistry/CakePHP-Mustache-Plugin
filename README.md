@@ -7,43 +7,71 @@ CakePan is a CakePHP view helper that renders Mustache templates. It will also l
 
 For scalability, when the time comes, you can use templates with a more powerful engine like Scala, or just send JSON from any source, and render with Javascript. 
 
-## Use
+## Installation
 
-### install
-First - make afolder called 'mustache' in your vendors folder. Add the Mustache PHP library to your app/vendor folder. from https://github.com/bobthecow/mustache.php/
+### 1. Add the [PHP Mustache library](https://github.com/bobthecow/mustache.php/) to `app/vendors/mustache`
+### 2. Add CakePan's `MustacheHelper.php` file to `app/Views/Helpers`. 
+### 3. Add the Mustache View Helper to your pages.
 
-Then, place this helper out into the views/helpers folder of your CakePHP project. 
+CakePan should be added to your project the same as any other CakePHP View Helper. See the [Cakebook's View Helpers documentation](http://book.cakephp.org/2.0/en/views/helpers.html) for more information.
 
-### production
-Write your elements in mustache format with the extension ".mustache" rather than ".ctp"!
+If you want to add Mustache support globally, add it to your `AppController`
 
-The Mustache manual is here: http://mustache.github.com/
+	class AppController extends Controller {
+		...
+		public $helpers = array('Mustache');
+		...
+	}
 
-In your view - render an element using $this->Mustache->render('element', $params); just like you would render a CakePHP element. 
-All the variable set by the controller are available, and merged with values passed into $params.
+## Usage
 
-Sub-templates should follow the same naming convention. Mustache will pass the variables to the sub-template in the context that it's called. For example, a nested template for a blog post with comments might look like:
+See the Mustache manual: [http://mustache.github.com/](http://mustache.github.com/)
 
-<pre>
-<strong>/views/elements/posts/post.mustache :</strong>
-{{#Post}}
-  &lt;h2&gt;{{title}}&lt;/h2\&gt;
-  &lt;div&gt;
-    {{text}}
-  &lt;/div&gt;
-{{/Post}}
-{{#Comment}}
-  {{&gt;post/comment}}
-{{/Comment}}
+### Creating a Mustache Template
+
+Your Mustache templates should all be in the `/app/View/Elements/` directory, with a `.mustache` extension.
+
+	/app/View/Elements/post.mustache
+
+	{{#Post}}
+	<h2>{{title}}</h2\>
+	<div>
+		{{text}}
+	</div>
+	{{/Post}}
 
 
-<strong>/views/elements/posts/comment.mustache :</strong>
-&lt;div&gt;
-&lt;h3&gt;{{#User}}{{name}}{{/User}} said: &lt;/h3&gt;
-&lt;p&gt;{{text}}&lt;/p&gt;
-&lt;/div&gt;
-</pre>
-In this example, the post/comment element is called within the context of one of the comments (which in this case belongs to a User)
+### Rendering a Mustache Template
 
-## Todo
-- Test suite
+All the variable set by the controller are available, and merged with values passed into `$params`.
+
+	$params = array(
+		'title' => 'Show me the bacon!',
+		'text' => 'Bacon ipsum dolor sit amet fatback pig swine...'
+	);
+
+	$this->Mustache->element('template_name', $params)
+
+
+### Sub-templates
+
+Sub-templates should follow the same naming convention. Mustache will pass the variables to the sub-template in the context that it's called. For example, a nested template for a blog `post` with `comments` might look like:
+
+/views/elements/posts/post.mustache:
+
+	{{#Post}}
+	<h2>{{title}}</h2\>
+	<div>
+		{{text}}
+	</div>
+	{{/Post}}
+	{{#Comment}}
+		{{>post/comment}}
+	{{/Comment}}
+
+/views/elements/posts/comment.mustache:
+
+	<div>
+	<h3>{{#User}}{{name}}{{/User}} said: </h3>
+	<p>{{text}}</p>
+	</div>
