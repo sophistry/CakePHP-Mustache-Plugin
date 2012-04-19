@@ -59,15 +59,17 @@ Sub-templates should follow the same naming convention. Mustache will pass the v
 
 /views/elements/posts/post.mustache:
 
-	{{#Post}}
-	<h2>{{title}}</h2\>
-	<div>
-		{{text}}
-	</div>
-	{{/Post}}
-	{{#Comment}}
-		{{>post/comment}}
-	{{/Comment}}
+'''mustache
+{{#Post}}
+<h2>{{title}}</h2\>
+<div>
+	{{text}}
+</div>
+{{/Post}}
+{{#Comment}}
+	{{>post/comment}}
+{{/Comment}}
+'''
 
 /views/elements/posts/comment.mustache:
 
