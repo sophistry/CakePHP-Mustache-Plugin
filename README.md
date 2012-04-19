@@ -44,13 +44,14 @@ Your Mustache templates should all be in the `/app/View/Elements/` directory, wi
 ### Rendering a Mustache Template
 
 All the variable set by the controller are available, and merged with values passed into `$params`.
+```php
+$params = array(
+	'title' => 'Show me the bacon!',
+	'text' => 'Bacon ipsum dolor sit amet fatback pig swine...'
+);
 
-	$params = array(
-		'title' => 'Show me the bacon!',
-		'text' => 'Bacon ipsum dolor sit amet fatback pig swine...'
-	);
-
-	$this->Mustache->element('template_name', $params)
+$this->Mustache->element('template_name', $params)
+```
 
 
 ### Sub-templates
