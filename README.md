@@ -59,7 +59,7 @@ Sub-templates should follow the same naming convention. Mustache will pass the v
 
 /views/elements/posts/post.mustache:
 
-'''mustache
+```mustache
 {{#Post}}
 <h2>{{title}}</h2\>
 <div>
@@ -69,7 +69,7 @@ Sub-templates should follow the same naming convention. Mustache will pass the v
 {{#Comment}}
 	{{>post/comment}}
 {{/Comment}}
-'''
+```
 
 /views/elements/posts/comment.mustache:
 
