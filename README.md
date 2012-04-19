@@ -17,11 +17,13 @@ CakePan should be added to your project the same as any other CakePHP View Helpe
 
 If you want to add Mustache support globally, add it to your `AppController`
 
-	class AppController extends Controller {
-		...
-		public $helpers = array('Mustache');
-		...
-	}
+```php
+class AppController extends Controller {
+	...
+	public $helpers = array('Mustache');
+	...
+}
+```
 
 ## Usage
 
@@ -44,6 +46,7 @@ Your Mustache templates should all be in the `/app/View/Elements/` directory, wi
 ### Rendering a Mustache Template
 
 All the variable set by the controller are available, and merged with values passed into `$params`.
+
 ```php
 $params = array(
 	'title' => 'Show me the bacon!',
