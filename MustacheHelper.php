@@ -142,7 +142,7 @@ class MustacheHelper extends AppHelper {
      */
     private function _loadPartials( $template ) {
         //Extract names of any partials from the template
-        preg_match_all( '/\{\{[\s]*\>[\s]*(.*)[\s]*\}\}/', $template, $partials );
+        preg_match_all( '/\{\{\> (\S+)\}\}/', $template, $partials );
 
         // iterate through the partials
         // adds the corresponding templates to the partials list while avoiding duplicates
