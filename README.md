@@ -50,7 +50,7 @@ All the variable set by the controller are available, and merged with values pas
 		'text' => 'Bacon ipsum dolor sit amet fatback pig swine...'
 	);
 
-	$this->Mustache->element('template_name', $params)
+	$this->Mustache->render('template_name', $params)
 
 
 
