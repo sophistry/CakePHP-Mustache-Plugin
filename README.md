@@ -31,7 +31,7 @@ See the Mustache manual: [http://mustache.github.com/](http://mustache.github.co
 
 Your Mustache templates should all be in the `/app/View/Elements/` directory, with a `.mustache` extension.
 
-	/app/View/Elements/post.mustache
+/app/View/Elements/post.mustache
 
 	{{#Post}}
 	<h2>{{title}}</h2\>
@@ -58,7 +58,7 @@ All the variable set by the controller are available, and merged with values pas
 
 Sub-templates should follow the same naming convention. Mustache will pass the variables to the sub-template in the context that it's called. For example, a nested template for a blog `post` with `comments` might look like:
 
-/views/elements/posts/post.mustache:
+/app/View/Elements/posts/post.mustache:
 
 	{{#Post}}
 	<h2>{{title}}</h2\>
@@ -70,7 +70,7 @@ Sub-templates should follow the same naming convention. Mustache will pass the v
 		{{>post/comment}}
 	{{/Comment}}
 
-/views/elements/posts/comment.mustache:
+/app/View/Elements/posts/comment.mustache:
 
 	<div>
 	<h3>{{#User}}{{name}}{{/User}} said: </h3>
