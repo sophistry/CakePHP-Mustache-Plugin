@@ -48,8 +48,7 @@ class MustacheHelper extends AppHelper {
         try {
             // get the template text. Also recursively loads all partials
             $template = $this->_loadTemplate( $element );
-            $this->log(am($this->_View->viewVars, $values));
-            Debugger::getType($this->_View);
+
             // Instantiate Mustache, with all data passed in.
             $M = new Mustache( $template, am($this->_View->viewVars, $values), $this->partials );
 
