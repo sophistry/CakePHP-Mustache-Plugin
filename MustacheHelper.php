@@ -100,7 +100,7 @@ class MustacheHelper extends AppHelper {
      */
     private function _getElementPath( $element ) {
         $element = str_replace('__', '/', $element);
-        return ROOT . DS . 'app' . DS . 'View' . DS . 'Mustache' . DS . $element . '.' . $this->ext;
+        return ROOT . DS . 'app' . DS . 'View' . DS . 'Elements' . DS . $element . '.' . $this->ext;
     }
        
     
