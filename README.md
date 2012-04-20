@@ -1,6 +1,6 @@
 # CakePan - CakePHP Mustache Support (CakePHP v2.x)
 
-CakePan is a CakePHP view helper that renders Mustache templates. It will also load and process sub-templates!
+CakePan is a CakePHP view helper that renders Mustache templates. It will also load and process partials!
 
 ### Why use Mustache templates in CakePHP?
 <strong>Portability and scalability!</strong> If you have an app that uses lots of front-end coding, you only have to write your templates once. Mustache templates can be rendered in PHP, Javascript, Ruby, Scala, even C++! If you want to move to or from some other framework (Rails, Grails, Lithium etc.), you can be sure that your views and design won't have to be re-built.
@@ -54,9 +54,9 @@ All the variable set by the controller are available, and merged with values pas
 
 
 
-### Sub-templates
+### Using Partials
 
-Sub-templates should follow the same naming convention. Mustache will pass the variables to the sub-template in the context that it's called. For example, a nested template for a blog `post` with `comments` might look like:
+Partials should follow the same naming convention. Mustache will pass the variables to the partial in the context that it's called. For example, a nested template for a blog `post` with `comments` might look like:
 
 /app/View/Elements/posts/post.mustache:
 
