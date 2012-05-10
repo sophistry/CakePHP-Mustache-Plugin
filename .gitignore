@@ -3,4 +3,4 @@
 
 # Ignore the other helpers. Only pay attention to mustache.php
 *.php
-!mustache.php
+!MustacheHelper.php

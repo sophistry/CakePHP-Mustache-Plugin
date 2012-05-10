@@ -44,18 +44,15 @@ class MustacheHelper extends AppHelper {
      * @param array $values - passed in values that are merged with the view variables. Associative array
      * @return string - HTML from the Mustache template
      */
-    function element( $element, $values = array() ) {
+    function render( $element, $values = array() ) {
         try {
             // get the template text. Also recursively loads all partials
             $template = $this->_loadTemplate( $element );
-        
-            // grab the Cake view with all variables
-            $V = ClassRegistry::getObject('view');
-            
-            // Instantiate Mustache, with all data passed in.
-            $M = new Mustache( $template, am( $V->viewVars, $values), $this->partials );
 
-            //generate the HTML
+            // Instantiate Mustache, with all data passed in.
+            $M = new Mustache( $template, am($this->_View->viewVars, $values), $this->partials );
+
+            // generate the HTML
             $result = $M->render();
             
         } catch ( Exception $e ) {
@@ -102,7 +99,7 @@ class MustacheHelper extends AppHelper {
      */
     private function _getElementPath( $element ) {
         $element = str_replace('__', '/', $element);
-        return ROOT . DS . 'app' . DS . 'views' . DS . 'elements' . DS . $element . '.' . $this->ext;
+        return ROOT . DS . 'app' . DS . 'View' . DS . 'Elements' . DS . $element . '.' . $this->ext;
     }
        
     
@@ -116,7 +113,7 @@ class MustacheHelper extends AppHelper {
         
         //fail nicely if we have a bad file
         if(!file_exists( $path ) ) {
-            debug( "Bad template path: $element<br />" ); 
+            debug( "Bad template path: $path" ); 
             return '';
         }
 
@@ -139,7 +136,7 @@ class MustacheHelper extends AppHelper {
      */
     private function _loadPartials( $template ) {
         //Extract names of any partials from the template
-        preg_match_all( '/\{\{[\s]*\>[\s]*(.*)[\s]*\}\}/', $template, $partials );
+        preg_match_all( '/\{\{\> (\S+)\}\}/', $template, $partials );
 
         // iterate through the partials
         // adds the corresponding templates to the partials list while avoiding duplicates
