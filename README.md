@@ -1,4 +1,5 @@
-# CakePHP (2.x) Mustache Plugin (forked and rebuilt as 2.x compliant plugin)
+# CakePHP (2.x) Mustache Plugin
+*(forked and rebuilt as 2.x compliant plugin)*
 
 CakePHP-Mustache-Plugin View helper that renders Mustache templates. It will also load and process partials!
 
