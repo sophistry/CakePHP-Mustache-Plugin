@@ -1,6 +1,6 @@
-# CakePan - CakePHP Mustache Support (CakePHP v2.x)
+# CakePHP (2.x) Mustache Plugin (forked and rebuilt as 2.x compliant plugin)
 
-CakePan is a CakePHP view helper that renders Mustache templates. It will also load and process partials!
+CakePHP-Mustache-Plugin View helper that renders Mustache templates. It will also load and process partials!
 
 ### Why use Mustache templates in CakePHP?
 <strong>Portability and scalability!</strong> If you have an app that uses lots of front-end coding, you only have to write your templates once. Mustache templates can be rendered in PHP, Javascript, Ruby, Scala, even C++! If you want to move to or from some other framework (Rails, Grails, Lithium etc.), you can be sure that your views and design won't have to be re-built.
@@ -9,17 +9,17 @@ For scalability, when the time comes, you can use templates with a more powerful
 
 ## Installation
 
-### 1. Add the [PHP Mustache library](https://github.com/bobthecow/mustache.php/) to `app/vendors/mustache`
-### 2. Add CakePan's `MustacheHelper.php` file to `app/Views/Helpers`. 
-### 3. Add the Mustache View Helper to your pages.
+### 1. From app directory - `git submodule add git@github.com:electblake/CakePHP-Mustache-Plugin.git Plugin/Mustache`
+### 2. cd into Plugin/Mustache (so we can pull in the latest php implementation of mustache into Plugin/Mustache/Vendor)
+### 3. `git submodule init`
+### 4. `git submodule update`
 
-CakePan should be added to your project the same as any other CakePHP View Helper. See the [Cakebook's View Helpers documentation](http://book.cakephp.org/2.0/en/views/helpers.html) for more information.
 
 If you want to add Mustache support globally, add it to your `AppController`
 
 	class AppController extends Controller {
 		...
-		public $helpers = array('Mustache');
+		public $helpers = array('Mustache.Mustache');
 		...
 	}
 

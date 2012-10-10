@@ -30,7 +30,13 @@
  * 
  */
 
-App::import( 'Vendor', 'Mustache', array( 'file' => 'mustache' . DS . 'Mustache.php') );
+#App::import( 'Vendor', 'Mustache', array( 'file' => 'mustache' . DS . 'Mustache.php') );
+
+App::import('Vendor', 'Mustache.Mustache',
+  array(
+    'file' => 'mustache' . DS . 'Mustache.php'
+  )
+);
 
 class MustacheHelper extends AppHelper {
     var $ext = 'mustache'; //Extention for the templates. 'mustache' unless noted otherwise
