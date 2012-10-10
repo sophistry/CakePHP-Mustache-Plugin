@@ -1,5 +1,5 @@
 # CakePHP (2.x) Mustache Plugin
-CakePHP-Mustache-Plugin View helper that renders Mustache templates. It will also load and process partials!
+Mustache View helper (**originally CakePan**) that renders Mustache templates. It will also load and process partials!
 
 ### Why use Mustache templates in CakePHP?
 <strong>Portability and scalability!</strong> If you have an app that uses lots of front-end coding, you only have to write your templates once. Mustache templates can be rendered in PHP, Javascript, Ruby, Scala, even C++! If you want to move to or from some other framework (Rails, Grails, Lithium etc.), you can be sure that your views and design won't have to be re-built.
