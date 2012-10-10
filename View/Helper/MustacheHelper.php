@@ -30,18 +30,17 @@
  * 
  */
 
-#App::import( 'Vendor', 'Mustache', array( 'file' => 'mustache' . DS . 'Mustache.php') );
-
-App::import('Vendor', 'Mustache.Mustache',
-  array(
-    'file' => 'mustache' . DS . 'Mustache.php'
-  )
-);
-
 class MustacheHelper extends AppHelper {
     var $ext = 'mustache'; //Extention for the templates. 'mustache' unless noted otherwise
     var $partials = array(); //recursively loaded partials. Save as class variable so we don't need to double-load
    
+  	public function __construct(View $View, $options = array()) {
+  		parent::__construct($View, $options);
+      // include the mustache namespace autoloader
+      App::import('Vendor', 'Mustache.mustache/src/Mustache/Autoloader');
+      Mustache_Autoloader::register();
+      $this->m = new Mustache_Engine;
+  	}
 
     /** Returns the rendered template as HTML. 
      * All variables should be 'set' by the CakePHP Controller
@@ -51,15 +50,12 @@ class MustacheHelper extends AppHelper {
      * @return string - HTML from the Mustache template
      */
     function render( $element, $values = array() ) {
+            
         try {
             // get the template text. Also recursively loads all partials
-            $template = $this->_loadTemplate( $element );
-
-            // Instantiate Mustache, with all data passed in.
-            $M = new Mustache( $template, am($this->_View->viewVars, $values), $this->partials );
-
+            $template = $this->_loadTemplate($element);
             // generate the HTML
-            $result = $M->render();
+            $result = $this->m->render($template, am($this->_View->viewVars, $values), $this->partials);
             
         } catch ( Exception $e ) {
             debug( $e );
@@ -105,7 +101,9 @@ class MustacheHelper extends AppHelper {
      */
     private function _getElementPath( $element ) {
         $element = str_replace('__', '/', $element);
-        return ROOT . DS . 'app' . DS . 'View' . DS . 'Elements' . DS . $element . '.' . $this->ext;
+        $app_path = App::path('View');
+        $app_path = $app_path[0];
+        return $app_path . DS . 'Elements' . DS . $element . '.' . $this->ext;
     }
        
     
