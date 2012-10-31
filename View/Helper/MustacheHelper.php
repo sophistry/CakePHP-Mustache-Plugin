@@ -39,7 +39,14 @@ class MustacheHelper extends AppHelper {
       // include the mustache namespace autoloader
       App::import('Vendor', 'Mustache.mustache/src/Mustache/Autoloader');
       Mustache_Autoloader::register();
-      $this->m = new Mustache_Engine;
+      
+      
+      $viewPath = App::path('View');
+      $partialsPath = $viewPath[0].'Elements';
+      
+      $this->m = new Mustache_Engine(array(
+        'partials_loader' => new Mustache_Loader_FilesystemLoader($partialsPath),
+      ));
   	}
 
     /** Returns the rendered template as HTML. 
@@ -49,7 +56,7 @@ class MustacheHelper extends AppHelper {
      * @param array $values - passed in values that are merged with the view variables. Associative array
      * @return string - HTML from the Mustache template
      */
-    function render( $element, $values = array() ) {
+    function render($element, $values = array()) {
             
         try {
             // get the template text. Also recursively loads all partials
@@ -103,7 +110,7 @@ class MustacheHelper extends AppHelper {
         $element = str_replace('__', '/', $element);
         $app_path = App::path('View');
         $app_path = $app_path[0];
-        return $app_path . DS . 'Elements' . DS . $element . '.' . $this->ext;
+        return $app_path . 'Elements' . DS . $element . '.' . $this->ext;
     }
        
     
@@ -113,8 +120,8 @@ class MustacheHelper extends AppHelper {
      * @return string - template string for rendering with Mustache
      */
     private function _loadTemplate( $element, $load_sub_templates = true ) {
-        $path = $this->_getElementPath( $element );
-        
+
+        $path = $this->_getElementPath($element);      
         //fail nicely if we have a bad file
         if(!file_exists( $path ) ) {
             debug( "Bad template path: $path" ); 
@@ -124,10 +131,9 @@ class MustacheHelper extends AppHelper {
         //read the file contents
         $template_file = fopen( $path, 'r' );
         $template = fread( $template_file, filesize( $path ) );
-        
         //load any partials
-        if( $load_sub_templates ) {
-            $this->_loadPartials( $template );
+        if($load_sub_templates) {
+          $this->_loadPartials($template);
         }
         return $template;
     }
@@ -140,14 +146,13 @@ class MustacheHelper extends AppHelper {
      */
     private function _loadPartials( $template ) {
         //Extract names of any partials from the template
-        preg_match_all( '/\{\{\> (\S+)\}\}/', $template, $partials );
-
+        preg_match_all( '#\{\{\>([^\}]+)\}\}#', $template, $partials );
         // iterate through the partials
         // adds the corresponding templates to the partials list while avoiding duplicates
         // _loadTemplate will call _loadPartials to get the full list of templates
         foreach ( $partials[1] as $partial ) {
-            if ( !isset( $this->partials[ $partial ]) ) {
-                $this->partials[ $partial ] = $this->_loadTemplate( $partial );
+            if ( !isset( $this->partials[$partial]) ) {
+                $this->partials[$partial] = $this->_loadTemplate( $partial );
             }
         }
      }
