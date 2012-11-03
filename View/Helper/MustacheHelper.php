@@ -40,15 +40,35 @@ class MustacheHelper extends AppHelper {
       App::import('Vendor', 'Mustache.mustache/src/Mustache/Autoloader');
       Mustache_Autoloader::register();
       
-      
+      $this->View = $View;
+
       $viewPath = App::path('View');
-      $partialsPath = $viewPath[0].'Elements';
+      $viewPath = $viewPath[0];
       
+      $viewPath = $this->checkPluginPath($viewPath);
+      
+      $partialsPath = $viewPath.'Elements';
       $this->m = new Mustache_Engine(array(
         'partials_loader' => new Mustache_Loader_FilesystemLoader($partialsPath),
       ));
   	}
 
+  	/**
+  	 * Take a path as default, and check if we should be looking in a plugin for elements instead.
+  	 */
+  	private function checkPluginPath($viewPath) {
+    	
+    	// check if we're in plugin and change partials path if we are      
+      if ($plugin = $this->View->plugin) {
+        $pluginPath = App::path('Plugin');
+        $pluginPath = $pluginPath[0];
+        $viewPath = $pluginPath.$plugin.'/View/';
+      }
+      
+      return $viewPath;
+    	
+  	}
+  
     /** Returns the rendered template as HTML. 
      * All variables should be 'set' by the CakePHP Controller
      *
@@ -110,6 +130,9 @@ class MustacheHelper extends AppHelper {
         $element = str_replace('__', '/', $element);
         $app_path = App::path('View');
         $app_path = $app_path[0];
+        
+        $app_path = $this->checkPluginPath($app_path);
+        
         return $app_path . 'Elements' . DS . $element . '.' . $this->ext;
     }
        
