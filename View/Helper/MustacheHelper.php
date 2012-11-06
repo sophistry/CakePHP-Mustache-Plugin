@@ -46,7 +46,6 @@ class MustacheHelper extends AppHelper {
       $viewPath = $viewPath[0];
       
       $viewPath = $this->checkPluginPath($viewPath);
-      
       $partialsPath = $viewPath.'Elements';
       $this->m = new Mustache_Engine(array(
         'partials_loader' => new Mustache_Loader_FilesystemLoader($partialsPath),
@@ -56,19 +55,37 @@ class MustacheHelper extends AppHelper {
   	/**
   	 * Take a path as default, and check if we should be looking in a plugin for elements instead.
   	 */
-  	private function checkPluginPath($viewPath) {
+  	private function checkPluginPath($viewPath, $elementFile = null) {
     	
     	// check if we're in plugin and change partials path if we are      
       if ($plugin = $this->View->plugin) {
         $pluginPath = App::path('Plugin');
         $pluginPath = $pluginPath[0];
-        $viewPath = $pluginPath.$plugin.'/View/';
+        
+        $pluginElementPath = $pluginPath.$plugin.'/View/';
+        
+        if ($elementFile and $this->checkPluginElement($pluginElementPath.$elementFile)) {
+          $viewPath = $pluginPath.$plugin.'/View/';
+        }
       }
-      
       return $viewPath;
     	
   	}
   
+  
+  	private function checkPluginElement($elementPath) {
+    	
+    	if (!file_exists($elementPath)) {
+        $viewPath = App::path('View');
+        $viewPath = $viewPath[0];
+	      $this->m = new Mustache_Engine(array(
+          'partials_loader' => new Mustache_Loader_FilesystemLoader($viewPath),
+        ));
+        return false;
+    	}
+    	return true;
+  	}
+  	
     /** Returns the rendered template as HTML. 
      * All variables should be 'set' by the CakePHP Controller
      *
@@ -130,10 +147,11 @@ class MustacheHelper extends AppHelper {
         $element = str_replace('__', '/', $element);
         $app_path = App::path('View');
         $app_path = $app_path[0];
+        $elementFile = $element . '.' . $this->ext;
         
-        $app_path = $this->checkPluginPath($app_path);
+        $app_path = $this->checkPluginPath($app_path, $elementFile);
         
-        return $app_path . 'Elements' . DS . $element . '.' . $this->ext;
+        return $app_path . 'Elements' . DS . $elementFile;
     }
        
     
