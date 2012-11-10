@@ -64,7 +64,7 @@ class MustacheHelper extends AppHelper {
         
         $pluginElementPath = $pluginPath.$plugin.'/View/';
         
-        if ($elementFile and $this->checkPluginElement($pluginElementPath.$elementFile)) {
+        if ($elementFile and $this->checkPluginElement($pluginElementPath.'Elements/'.$elementFile)) {
           $viewPath = $pluginPath.$plugin.'/View/';
         }
       }
@@ -74,7 +74,6 @@ class MustacheHelper extends AppHelper {
   
   
   	private function checkPluginElement($elementPath) {
-    	
     	if (!file_exists($elementPath)) {
         $viewPath = App::path('View');
         $viewPath = $viewPath[0];
@@ -82,8 +81,9 @@ class MustacheHelper extends AppHelper {
           'partials_loader' => new Mustache_Loader_FilesystemLoader($viewPath),
         ));
         return false;
+    	} else {
+      	return true;	
     	}
-    	return true;
   	}
   	
     /** Returns the rendered template as HTML. 
