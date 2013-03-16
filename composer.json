@@ -2,6 +2,7 @@
   "name": "electblake/mustache",
   "type": "cakephp-plugin",
   "description": "CakePHP View Helper Plugin for the Mustache Templating Language",
+  "license": "MIT",
   "authors": [
     {
       "name": "Brian Wigginton",
