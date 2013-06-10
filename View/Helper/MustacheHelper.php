@@ -163,10 +163,15 @@ class MustacheHelper extends AppHelper {
     private function _loadTemplate( $element, $load_sub_templates = true ) {
 
         $path = $this->_getElementPath($element);      
-        //fail nicely if we have a bad file
+        // try to use the string if there is no file
+        // DEC 20130610 this is a nasty hack that should be 
+        // fixed using the template loader capabilities of mustache.php
+        // see https://github.com/bobthecow/mustache.php/wiki/Template-Loading
+        // but, it works ok for now.
         if(!file_exists( $path ) ) {
-            debug( "Bad template path: $path" ); 
-            return '';
+            return $element;
+            // debug( "Bad template path: $path" ); 
+            // return '';
         }
 
         //read the file contents
