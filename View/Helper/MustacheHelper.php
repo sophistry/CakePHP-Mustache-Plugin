@@ -49,6 +49,11 @@ class MustacheHelper extends AppHelper {
       $partialsPath = $viewPath.'Elements';
       $this->m = new Mustache_Engine(array(
         'partials_loader' => new Mustache_Loader_FilesystemLoader($partialsPath),
+        // TODO: make this a little bit better - right now it just returns the value
+        // but it should be a little bit more strict about parsing HTML
+        'escape' => function($value) {
+           return $value;
+        }
       ));
   	}
 
